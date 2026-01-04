@@ -63,27 +63,32 @@ animate_progress() {
     printf "    \b\b\b\b"
 }
 
-# Welcome animation
-welcome_animation() {
-    clear
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${CYAN}"
-    echo "   
-    echo "   
-    echo "                "██████╗  ██║"
-    echo "                "██╔══██╗ ██║" 
-    echo "                "██████╔╝ ██║" 
-    echo "                "██╔══██╗ ██║" 
-    echo "                "██╔══██╗ ██║" 
-    echo "                "██████╔╝ ██║"
-    echo "   
-    echo "   
-    echo "   
-    echo -e "${NC}"
-    echo -e "${CYAN}              Blueprint Installer${NC}"
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    sleep 2
+
+# -------------------------
+# Animate Logo
+# -------------------------
+animate_logo() {
+  clear
+  local logo=(
+
+
+"██████╗  ██║"
+"██╔══██╗ ██║"
+"██████╔╝ ██║"
+"██╔══██╗ ██║"
+"██╔══██╗ ██║"
+"██████╔╝ ██║"
+
+  )
+  
+  for line in "${logo[@]}"; do
+    echo -e "${CYAN}${line}${RESET}"
+    sleep 0.2
+  done
+  echo ""
+  sleep 0.5
 }
+
 
 # Function: Install (Fresh Setup)
 install_GuideCloud() {
