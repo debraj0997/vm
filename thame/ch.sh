@@ -36,7 +36,7 @@ menu() {
 blueprint1() {
   header
   echo -e "${G}▶ Running BLUEPRINT 1...${N}"
-  bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/thame/blueprint.sh)
+  bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/thame/blueprint.sh)
   pause
 }
 
