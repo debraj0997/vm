@@ -17,9 +17,9 @@ print_box() {
 
 print_header() {
     clear
-    echo -e "\n${C}╔════════════════════════════════════════════════╗${N}"
-    echo -e "${C}║${W}           D E V E L O P M E N T   M E N U          ${C}║${N}"
-    echo -e "${C}╚════════════════════════════════════════════════╝${N}\n"
+    echo -e "\n${C}╔════════════════════════════════════════════════╗${Y}"
+    echo -e "${C}║${W}           D E V E L O P M E N T   M E N U          ${C}║${Y}"
+    echo -e "${C}╚════════════════════════════════════════════════╝${Y}\n"
 }
 
 print_option() {
@@ -42,11 +42,11 @@ print_status() {
 while true; do
     print_header
     
-    print_option "1" "GitHub / VM" "$G"
-    print_option "2" "Tool" "$Y"
-    print_option "3" "Run" "$B"
+    print_option "1" "GitHub / VM" "$B"
+    print_option "2" "Tool" "$I"
+    print_option "3" "Run" "$G"
     print_option "4" "RED HED" "$R"
-    print_option "4" "Exit" "$R"
+    print_option "5" "Exit" "$M"
 
     
     echo -e "${M}════════════════════════════════════════════════${N}"
