@@ -105,7 +105,7 @@ case $t in
  4) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/SYSTEM.sh) ;;
  5) bash <(curl -s https://raw.githubusercontent.com/nobita54/-150/refs/heads/main/tools/vps.sh) ;;
  6) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/terminal.sh) ;;
- 7) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/xrdp.sh) ;;
+ 7) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/rdp.sh) ;;
  8) break;;
  *) echo -e "${RED}Invalid${NC}"; pause;;
 esac
