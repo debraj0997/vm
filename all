@@ -133,10 +133,10 @@ esac
 done
 }
 
-# ===================== MAIN MENU =====================
+# ===================== ALL MENU =====================
 main_menu(){
 while true; do banner
-echo -e "${CYAN}────────────── MAIN MENU ──────────────${NC}"
+echo -e "${CYAN}────────────── ALL MENU ──────────────${NC}"
 echo -e "${BLUE} 1)${WHITE} VPS RUN"
 echo -e "${BLUE} 2)${WHITE} PANEL"
 echo -e "${BLUE} 3)${WHITE} WINGS"
