@@ -1,10 +1,10 @@
 #!/bin/bash
 # ===========================================================
-# B1 TERMINAL CONTROL PANEL
-# Custom Redesign for B1
+# B1 CONTROL PANEL
+# Mode By - B1
 # ===========================================================
 
-# --- STYLISH COLORS ---
+# --- COLORS ---
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
@@ -16,28 +16,28 @@ GRAY='\033[0;90m'
 NC='\033[0m' 
 BOLD='\033[1m'
 
-# ===================== DYNAMIC COLOR SYSTEM =====================
-COLORS=('\033[1;32m' '\033[1;34m' '\033[1;35m' '\033[1;36m' '\033[1;37m')
+# ===================== DYNAMIC COLOR =====================
+COLORS=('\033[1;31m' '\033[1;32m' '\033[1;34m' '\033[1;35m' '\033[1;36m')
 rand_color(){ echo -e "${COLORS[$RANDOM % ${#COLORS[@]}]}"; }
 
 pause(){ 
     echo -e "\n${GRAY}──────────────────────────────────────────────────${NC}"
-    read -p "  Press [Enter] to return to B1 Menu..." x
+    read -p "  Press [Enter] to continue..." x
 }
 
-# ===================== B1 SIGNATURE BANNER =====================
+# ===================== B1 ULTRA BANNER =====================
 banner(){
     clear
     local C=$(rand_color)
-    echo -e "${C}┌──────────────────────────────────────────────────────────────┐${NC}"
-    echo -e "${C}│${NC}  ██████╗  ██╗     ██████╗  ██████╗ ███╗   ██╗████████╗███████╗ ${C}│${NC}"
-    echo -e "${C}│${NC}  ██╔══██╗███║    ██╔════╝ ██╔═══██╗████╗  ██║╚══██╔══╝██╔════╝ ${C}│${NC}"
-    echo -e "${C}│${NC}  ██████╔╝╚██║    ██║  ███╗██║   ██║██╔██╗ ██║   ██║   █████╗   ${C}│${NC}"
-    echo -e "${C}│${NC}  ██╔══██╗ ██║    ██║   ██║██║   ██║██║╚██╗██║   ██║   ██╔══╝   ${C}│${NC}"
-    echo -e "${C}│${NC}  ██████╔╝ ██║    ╚██████╔╝╚██████╔╝██║ ╚████║   ██║   ███████╗ ${C}│${NC}"
-    echo -e "${C}│${NC}  ╚═════╝  ╚═╝     ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ${C}│${NC}"
-    echo -e "${C}└──────────────────────────────────────────────────────────────┘${NC}"
-    echo -e "             ${BOLD}${WHITE}DEVELOPED BY : B1${NC} | ${GREEN}2026 EDITION${NC}"
+    echo -e "${C}  ██████╗  ██╗ ${NC}"
+    echo -e "${C}  ██╔══██╗███║ ${NC}"
+    echo -e "${C}  ██████╔╝╚██║ ${NC}"
+    echo -e "${C}  ██╔══██╗ ██║ ${NC}"
+    echo -e "${C}  ██████╔╝ ██║ ${NC}"
+    echo -e "${C}  ╚═════╝  ╚═╝ ${NC}"
+    echo -e "${BOLD}${WHITE}  ────────────${NC}"
+    echo -e "  ${BOLD}${C}  MADE BY B1${NC}"
+    echo -e "${BOLD}${WHITE}  ────────────${NC}"
     echo
 }
 
@@ -45,15 +45,15 @@ banner(){
 panel_menu(){
     while true; do 
         banner
-        echo -e "  ${PURPLE}┏━━━━━━ B1 PANEL INTERFACE ━━━━━━┓${NC}"
-        echo -e "  ${WHITE}  [01]${NC} FeatherPanel      ${WHITE}[07]${NC} Paymenter"
-        echo -e "  ${WHITE}  [02]${NC} Pterodactyl       ${WHITE}[08]${NC} CtrlPanel"
-        echo -e "  ${WHITE}  [03]${NC} Jexactyl v3       ${WHITE}[09]${NC} Reviactyl"
-        echo -e "  ${WHITE}  [04]${NC} Jexpanel v4       ${WHITE}[10]${NC} External Tools"
-        echo -e "  ${WHITE}  [05]${NC} Dashboard v3      ${WHITE}[11]${NC} RETURN BACK"
-        echo -e "  ${WHITE}  [06]${NC} Dashboard v4"
-        echo -e "  ${PURPLE}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}"
-        echo -ne "  ${BOLD}${CYAN}B1 Select » ${NC}"
+        echo -e "  ${PURPLE}┌────────── B1 PANEL ──────────┐${NC}"
+        echo -e "  ${WHITE}  01. FeatherPanel   07. Paymenter"
+        echo -e "  ${WHITE}  02. Pterodactyl    08. CtrlPanel"
+        echo -e "  ${WHITE}  03. Jexactyl v3    09. Reviactyl"
+        echo -e "  ${WHITE}  04. Jexpanel v4    10. External"
+        echo -e "  ${WHITE}  05. Dashboard v3   11. BACK"
+        echo -e "  ${WHITE}  06. Dashboard v4"
+        echo -e "  ${PURPLE}└──────────────────────────────┘${NC}"
+        echo -ne "  ${BOLD}${CYAN}B1 Choice » ${NC}"
         read p
 
         case $p in
@@ -68,7 +68,7 @@ panel_menu(){
              9) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unReviactyl.sh) ;;
              10) bash <(curl -s https://raw.githubusercontent.com/yourlink/t-panel.sh) ;;
              11) break;;
-             *) echo -e "  ${RED}Invalid Option!${NC}"; sleep 1;;
+             *) echo -e "  ${RED}Invalid!${NC}"; sleep 1;;
         esac
     done
 }
@@ -77,13 +77,13 @@ panel_menu(){
 tools_menu(){
     while true; do 
         banner
-        echo -e "  ${BLUE}┏━━━━━━ B1 SYSTEM TOOLS ━━━━━━┓${NC}"
-        echo -e "  ${CYAN}  1)${NC} Root Access     ${CYAN}5)${NC} Vps Run"
-        echo -e "  ${CYAN}  2)${NC} Tailscale       ${CYAN}6)${NC} TERMINAL"
-        echo -e "  ${CYAN}  3)${NC} Cloudflare DNS  ${CYAN}7)${NC} RDP Installer"
-        echo -e "  ${CYAN}  4)${NC} System Info     ${CYAN}8)${NC} RETURN"
-        echo -e "  ${BLUE}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}"
-        echo -ne "  ${BOLD}${CYAN}B1 Select » ${NC}"
+        echo -e "  ${BLUE}┌────────── B1 TOOLS ──────────┐${NC}"
+        echo -e "  ${WHITE}  1. Root Access     5. Vps Run"
+        echo -e "  ${WHITE}  2. Tailscale       6. TERMINAL"
+        echo -e "  ${WHITE}  3. Cloudflare DNS  7. RDP"
+        echo -e "  ${WHITE}  4. System Info     8. BACK"
+        echo -e "  ${BLUE}└──────────────────────────────┘${NC}"
+        echo -ne "  ${BOLD}${CYAN}B1 Choice » ${NC}"
         read t
 
         case $t in
@@ -104,13 +104,13 @@ tools_menu(){
 theme_menu(){
     while true; do 
         banner
-        echo -e "  ${YELLOW}┏━━━━━━ B1 VISUAL THEMES ━━━━━━┓${NC}"
-        echo -e "  ${WHITE}  1)${NC} Blueprint Theme"
-        echo -e "  ${WHITE}  2)${NC} Change Theme"
-        echo -e "  ${WHITE}  3)${NC} Uninstall Theme"
-        echo -e "  ${WHITE}  4)${NC} RETURN"
-        echo -e "  ${YELLOW}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}"
-        echo -ne "  ${BOLD}${CYAN}B1 Select » ${NC}"
+        echo -e "  ${YELLOW}┌────────── B1 THEME ──────────┐${NC}"
+        echo -e "  ${WHITE}  1. Blueprint Theme"
+        echo -e "  ${WHITE}  2. Change Theme"
+        echo -e "  ${WHITE}  3. Uninstall Theme"
+        echo -e "  ${WHITE}  4. BACK"
+        echo -e "  ${YELLOW}└──────────────────────────────┘${NC}"
+        echo -ne "  ${BOLD}${CYAN}B1 Choice » ${NC}"
         read th
 
         case $th in
@@ -127,13 +127,13 @@ theme_menu(){
 main_menu(){
     while true; do 
         banner
-        echo -e "  ${GREEN}╔═══════════ B1 MAIN DASHBOARD ═══════════╗${NC}"
+        echo -e "  ${GREEN}╔══════════ B1 MAIN ══════════╗${NC}"
         echo -e "    ${CYAN}[1]${NC} VPS RUN       ${CYAN}[5]${NC} THEME"
         echo -e "    ${CYAN}[2]${NC} PANEL         ${CYAN}[6]${NC} SYSTEM"
         echo -e "    ${CYAN}[3]${NC} WINGS         ${CYAN}[7]${NC} ALL BEST"
         echo -e "    ${CYAN}[4]${NC} TOOLS         ${CYAN}[8]${NC} EXIT"
-        echo -e "  ${GREEN}╚═════════════════════════════════════════╝${NC}"
-        echo -ne "  ${BOLD}${WHITE}Choice B1 → ${NC}"
+        echo -e "  ${GREEN}╚═════════════════════════════╝${NC}"
+        echo -ne "  ${BOLD}${WHITE}B1 Command → ${NC}"
         read c
 
         case $c in
@@ -144,11 +144,10 @@ main_menu(){
              5) theme_menu ;;
              6) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/menu/System1.sh) ;;
              7) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/External/INFRA.sh) ;;
-             8) echo -e "\n  ${GREEN}Exiting B1 System... Goodbye!${NC}"; exit ;;
-             *) echo -e "  ${RED}Invalid selection!${NC}"; sleep 1 ;;
+             8) echo -e "\n  ${GREEN}Goodbye B1!${NC}"; exit ;;
+             *) echo -e "  ${RED}Error!${NC}"; sleep 1 ;;
         esac
     done
 }
 
-# Start the script
 main_menu
