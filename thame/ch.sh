@@ -54,7 +54,7 @@ while true; do
   case $opt in
     1) blueprint1 ;;
     2) blueprint2 ;;
-    3) bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/thame/fix.sh) ;;
+    3) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/thame/fix.sh) ;;
     0) echo -e "${M}👋 Exit. Panel shant ho gaya.${N}"; exit ;;
     *) echo -e "${R}❌ Galat choice. Phir se try kar.${N}"; sleep 1 ;;
   esac
