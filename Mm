@@ -55,6 +55,14 @@ read -p " 🎯 ENTER CHOICE → " p
 case $p in
  1) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unFEATHERPANEL.sh) ;;
  2) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unPterodactyl.sh) ;;
+ 3) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/panel/Jexactyl.sh) ;;
+ 4) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unJexactyl.sh) ;;
+ 5) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/undash-3.sh) ;;
+ 6) bash <(curl -s https://github.com/nobita329/The-Coding-Hub/raw/refs/heads/main/srv/Uninstall/dash-v4.sh) ;;
+ 7) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unPaymenter.sh) ;;
+ 8) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unCtrlPanel.sh) ;;
+ 9) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unReviactyl.sh) ;;
+ 10) bash <(curl -s https://raw.githubusercontent.com/yourlink/t-panel.sh) ;;
  11) break;;
  *) echo -e "${RED} [!] Selection Error. Refreshing... ${NC}"; sleep 1;;
 esac
@@ -73,6 +81,12 @@ echo -e " ${C1}─────────────────────�
 read -p " ⚙️ TOOL ID → " t
 case $t in
  1) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/root.sh) ;;
+ 2) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/Tailscale.sh) ;;
+ 3) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/cloudflare.sh) ;;
+ 4) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/SYSTEM.sh) ;;
+ 5) bash <(curl -s https://raw.githubusercontent.com/nobita54/-150/refs/heads/main/tools/vps.sh) ;;
+ 6) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/terminal.sh) ;;
+ 7) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/rdp.sh) ;;
  8) break;;
 esac
 done
