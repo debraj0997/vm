@@ -1,155 +1,107 @@
 #!/bin/bash
 # ===========================================================
-# 🚀 B1 & GUIDECLOUD - ULTIMATE CONTROL PANEL
-# 🎨 Design: RGB Emoji Edition 2026
+# 🚀 GUIDECLOUD ULTIMATE TERMINAL v3.0
+# 🛠️ POWERED BY: B1 @ GuideCloud
+# 📅 EDITION: 2026
 # ===========================================================
 
-# --- RGB COLOR PALETTE ---
-RED='\033[1;31m'
-GREEN='\033[1;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[1;34m'
-PURPLE='\033[1;35m'
-CYAN='\033[1;36m'
-WHITE='\033[1;37m'
-ORANGE='\033[38;5;208m'
-PINK='\033[38;5;205m'
-GRAY='\033[0;90m'
-NC='\033[0m' 
-BOLD='\033[1m'
-
-# ===================== DYNAMIC COLOR SYSTEM =====================
-COLORS=($RED $GREEN $YELLOW $BLUE $PURPLE $CYAN $ORANGE $PINK)
-rand_color(){ echo -e "${COLORS[$RANDOM % ${#COLORS[@]}]}"; }
-
-pause(){ 
-    echo -e "\n${GRAY}──────────────────────────────────────────────────${NC}"
-    echo -e "  ${YELLOW}⌨️  Press [Enter] to return to B1-CLOUD...${NC}"
-    read x
+# --- DYNAMIC COLOR ENGINE ---
+refresh_color() {
+    # Exclusive Professional Colors
+    COLORS=('\033[1;32m' '\033[1;33m' '\033[1;34m' '\033[1;35m' '\033[1;36m' '\033[38;5;214m')
+    C1=${COLORS[$RANDOM % ${#COLORS[@]}]} # Primary Branding Color
+    C2='\033[1;37m' # Clean White
+    NC='\033[0m'
+    BOLD='\033[1m'
 }
 
-# ===================== RGB EMOJI BANNER =====================
+# --- SYSTEM INFO ---
+UPTIME=$(uptime -p | sed 's/up //')
+
+# ===================== PERFECT LOGO BANNER =====================
 banner(){
-    clear
-    C1=$(rand_color); C2=$(rand_color); C3=$(rand_color)
-    echo -e "${C1}🎁━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━🎁${NC}"
-    echo -e "${C2}   ██████╗  ██╗     ${C3}██████╗ ██╗   ██╗██╗██████╗ ███████╗  ${NC}"
-    echo -e "${C2}   ██╔══██╗███║    ${C3}██╔════╝ ██║   ██║██║██╔══██╗██╔════╝  ${NC}"
-    echo -e "${C2}   ██████╔╝╚██║    ${C3}██║  ███╗██║   ██║██║██║  ██║█████╗    ${NC}"
-    echo -e "${C2}   ██╔══██╗ ██║    ${C3}██║   ██║██║   ██║██║██║  ██║██╔══╝    ${NC}"
-    echo -e "${C2}   ██████╔╝ ██║    ${C3}╚██████╔╝╚██████╔╝██║██████╔╝███████╗  ${NC}"
-    echo -e "${C2}   ╚═════╝  ╚═╝    ${C3} ╚═════╝  ╚═════╝ ╚═╝╚═════╝ ╚══════╝  ${NC}"
-    echo -e "${C1}🎁━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━🎁${NC}"
-    echo -e "       👑 ${BOLD}${WHITE}OWNERS: B1 & GUIDECLOUD${NC}  |  ✨ ${GREEN}STABLE v5.0${NC}"
-    echo
+refresh_color
+clear
+echo -e "${C1}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e " ${BOLD}${C2}⚡ UPTIME: ${C1}$UPTIME${NC}  ${BOLD}${C2}👑 OWNER: ${C1}B1 @ GUIDE MC${NC}  ${BOLD}${C2}📅 YEAR: ${C1}2026${NC}"
+echo -e "${C1}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${C1}"
+echo -e "   ██████╗ ██╗   ██╗██╗██████╗ ███████╗ ██████╗██╗      ██████╗ ██╗   ██╗██████╗ "
+echo -e "  ██╔════╝ ██║   ██║██║██╔══██╗██╔════╝██╔════╝██║     ██╔═══██╗██║   ██║██╔══██╗"
+echo -e "  ██║  ███╗██║   ██║██║██║  ██║█████╗  ██║     ██║     ██║   ██║██║   ██║██║  ██║"
+echo -e "  ██║   ██║██║   ██║██║██║  ██║██╔══╝  ██║     ██║     ██║   ██║██║   ██║██║  ██║"
+echo -e "  ╚██████╔╝╚██████╔╝██║██████╔╝███████╗╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝"
+echo -e "   ╚═════╝  ╚═════╝ ╚═╝╚═════╝ ╚══════╝ ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝ "
+echo -e "${NC}"
+echo -e "                     ${BOLD}${C2}DEVELOPED & PROMOTED BY: ${C1}B1${NC}"
+echo -e "${C1}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo
 }
 
-# ===================== PANEL MENU =====================
+# ===================== MENUS =====================
 panel_menu(){
-    while true; do 
-        banner
-        echo -e "  ${PURPLE}💎────────────── PANEL INTERFACE ──────────────💎${NC}"
-        echo -e "  ${CYAN}  [01] 🕊️  FeatherPanel      ${PINK}[07] 💳  Paymenter"
-        echo -e "  ${CYAN}  [02] 🦖  Pterodactyl       ${PINK}[08] 🕹️  CtrlPanel"
-        echo -e "  ${CYAN}  [03] ⚡  Jexactyl v3       ${PINK}[09] 🧬  Reviactyl"
-        echo -e "  ${CYAN}  [04] 🌀  Jexpanel v4       ${PINK}[10] 🛠️  Extra Tools"
-        echo -e "  ${CYAN}  [05] 📊  Dashboard v3      ${RED}[11] ⬅️  BACK HOME"
-        echo -e "  ${CYAN}  [06] 📈  Dashboard v4"
-        echo -e "  ${PURPLE}💎─────────────────────────────────────────────💎${NC}"
-        echo -ne "  ${BOLD}${YELLOW}⚡ B1-CLOUD Select » ${NC}"
-        read p
+while true; do banner
+echo -e " ${BOLD}${C1}💠 [ SERVER PANEL MANAGEMENT ]${NC}"
+echo -e " ${C1}─────────────────────────────────────────────────────────────────────────────${NC}"
+echo -e "  ${C1}01)${C2} 🪶 FeatherPanel      ${C1}07)${C2} 💳 Payment Gateway"
+echo -e "  ${C1}02)${C2} 🦖 Pterodactyl       ${C1}08)${C2} 🎮 CtrlPanel"
+echo -e "  ${C1}03)${C2} 🧪 Jexactyl v3       ${C1}09)${C2} 🔄 Reviactyl"
+echo -e "  ${C1}04)${C2} 🧬 Jexpanel v4       ${C1}10)${C2} 🔧 External Tools"
+echo -e "  ${C1}05)${C2} 📊 Dashboard v3      ${C1}11)${C2} 🔙 Return to HQ"
+echo -e "  ${C1}06)${C2} 📈 Dashboard v4"
+echo -e " ${C1}─────────────────────────────────────────────────────────────────────────────${NC}"
+read -p " 🎯 ENTER CHOICE → " p
 
-        case $p in
-             1) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unFEATHERPANEL.sh) ;;
-             2) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unPterodactyl.sh) ;;
-             3) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/panel/Jexactyl.sh) ;;
-             4) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unJexactyl.sh) ;;
-             5) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/undash-3.sh) ;;
-             6) bash <(curl -s https://github.com/nobita329/The-Coding-Hub/raw/refs/heads/main/srv/Uninstall/dash-v4.sh) ;;
-             7) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unPaymenter.sh) ;;
-             8) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unCtrlPanel.sh) ;;
-             9) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unReviactyl.sh) ;;
-             10) bash <(curl -s https://raw.githubusercontent.com/yourlink/t-panel.sh) ;;
-             11) break;;
-             *) echo -e "  ${RED}❌ Invalid Option!${NC}"; sleep 1;;
-        esac
-    done
+case $p in
+ 1) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unFEATHERPANEL.sh) ;;
+ 2) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unPterodactyl.sh) ;;
+ 11) break;;
+ *) echo -e "${RED} [!] Selection Error. Refreshing... ${NC}"; sleep 1;;
+esac
+done
 }
 
-# ===================== TOOLS MENU =====================
 tools_menu(){
-    while true; do 
-        banner
-        echo -e "  ${BLUE}🛠️ ────────────── SYSTEM TOOLS ──────────────🛠️${NC}"
-        echo -e "  ${ORANGE}  1) 🔑 Root Access     5) 🚀 Vps Run"
-        echo -e "  ${ORANGE}  2) 🔗 Tailscale       6) 💻 TERMINAL"
-        echo -e "  ${ORANGE}  3) ☁️  Cloudflare DNS  7) 🖥️  RDP Install"
-        echo -e "  ${ORANGE}  4) ℹ️  System Info     8) ⬅️  BACK"
-        echo -e "  ${BLUE}🛠️ ──────────────────────────────────────────🛠️${NC}"
-        echo -ne "  ${BOLD}${YELLOW}🔧 B1-CLOUD Select » ${NC}"
-        read t
-
-        case $t in
-             1) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/root.sh) ;;
-             2) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/Tailscale.sh) ;;
-             3) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/cloudflare.sh) ;;
-             4) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/SYSTEM.sh) ;;
-             5) bash <(curl -s https://raw.githubusercontent.com/nobita54/-150/refs/heads/main/tools/vps.sh) ;;
-             6) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/terminal.sh) ;;
-             7) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/rdp.sh) ;;
-             8) break;;
-             *) echo -e "  ${RED}❌ Invalid!${NC}"; sleep 1;;
-        esac
-    done
+while true; do banner
+echo -e " ${BOLD}${C1}🛠️ [ ADVANCED EMPIRE TOOLS ]${NC}"
+echo -e " ${C1}─────────────────────────────────────────────────────────────────────────────${NC}"
+echo -e "  ${C1}1)${C2} 🔑 Root Access       ${C1}5)${C2} 🚀 Vps Run"
+echo -e "  ${C1}2)${C2} 🌐 Tailscale         ${C1}1)${C2} 📟 TERMINAL"
+echo -e "  ${C1}3)${C2} ☁️  Cloudflare DNS    ${C1}7)${C2} 💻 RDP Installer"
+echo -e "  ${C1}4)${C2} 📋 System Info       ${C1}8)${C2} 🔙 Back"
+echo -e " ${C1}─────────────────────────────────────────────────────────────────────────────${NC}"
+read -p " ⚙️ TOOL ID → " t
+case $t in
+ 1) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/tools/root.sh) ;;
+ 8) break;;
+esac
+done
 }
 
-# ===================== MAIN MENU =====================
 main_menu(){
-    while true; do 
-        banner
-        echo -e "  ${GREEN}🔥 ╔═══════════ B1-CLOUD MAIN DASH ═══════════╗ 🔥${NC}"
-        echo -e "    ${CYAN}[1] 💨 VPS RUN       ${ORANGE}[5] 🎨 THEME"
-        echo -e "    ${CYAN}[2] 📟 PANEL         ${ORANGE}[6] ⚙️  SYSTEM"
-        echo -e "    ${CYAN}[3] 🛰️  WINGS         ${ORANGE}[7] 🌟 BEST ALL"
-        echo -e "    ${CYAN}[4] 🧰 TOOLS         ${RED}[8] 🛑 EXIT"
-        echo -e "  ${GREEN}🔥 ╚══════════════════════════════════════════╝ 🔥${NC}"
-        echo -ne "  ${BOLD}${WHITE}👉 Choose Option : ${NC}"
-        read c
+while true; do banner
+echo -e " ${BOLD}${C2}💎 [ B1 x GUIDECLOUD MAINBOARD ]${NC}"
+echo -e " ${C1}─────────────────────────────────────────────────────────────────────────────${NC}"
+echo -e "  ${C1}[1]${C2} ⚡  VPS RUN           ${C1}[5]${C2} 🎨  THEME"
+echo -e "  ${C1}[2]${C2} 🖥️   PANEL            ${C1}[6]${C2} ⚙️   SYSTEM"
+echo -e "  ${C1}[3]${C2} 🕊️   WINGS            ${C1}[7]${C2} 👑  ALL BEST"
+echo -e "  ${C1}[4]${C2} 🛠️   TOOLS            ${C1}[8]${C2} 🚪  EXIT"
+echo -e " ${C1}─────────────────────────────────────────────────────────────────────────────${NC}"
+echo -en " ${BOLD}${C1}❯❯${NC} ${BOLD}${C2}COMMANDER B1, SELECT UNIT: ${NC}"
+read c
 
-        case $c in
-             1) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/vm/vps.sh) ;;
-             2) panel_menu ;;
-             3) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/wings/www.sh) ;;
-             4) tools_menu ;;
-             5) theme_menu ;;
-             6) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/menu/System1.sh) ;;
-             7) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/External/INFRA.sh) ;;
-             8) echo -e "\n  ${GREEN}👋 Shutting down B1 & GuideCloud... See ya!${NC}"; exit ;;
-             *) echo -e "  ${RED}❌ Invalid selection!${NC}"; sleep 1 ;;
-        esac
-    done
+case $c in
+ 1) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/vm/vps.sh) ;;
+ 2) panel_menu ;;
+ 3) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/wings/www.sh) ;;
+ 4) tools_menu ;;
+ 5) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/thame/ch.sh) ;;
+ 6) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/menu/System1.sh) ;;
+ 7) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/External/INFRA.sh) ;;
+ 8) echo -e "${GREEN}System Shutdown... Goodbye King B1!${NC}"; exit ;;
+ *) echo -e "\033[1;31m [!] Error! Refreshing Dynamic UI... \033[0m"; sleep 1 ;;
+esac
+done
 }
 
-# Theme menu logic 
-theme_menu(){
-    while true; do banner
-    echo -e "${PINK}🎨 ────────────── B1 THEME SHOP ────────────── 🎨${NC}"
-    echo -e "  ${BLUE}1) 📘 Blueprint Theme"
-    echo -e "  ${BLUE}2) 🌈 Change Theme"
-    echo -e "  ${BLUE}3) 🗑️  Uninstall Theme"
-    echo -e "  ${BLUE}4) ⬅️  Back"
-    echo -ne "  ${BOLD}${YELLOW}Choice » ${NC}"
-    read th
-    case $th in
-     1) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/thame/ch.sh) ;;
-     2) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/thame/chang.sh) ;;
-     3) bash <(curl -s https://raw.githubusercontent.com/yourlink/theme_uninstall.sh) ;;
-     4) break;;
-     *) echo -e "${RED}❌ Invalid${NC}"; pause;;
-    esac
-    done
-}
-
-# Launch the Dashboard
 main_menu
-
