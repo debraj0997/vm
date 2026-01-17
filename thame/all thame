@@ -1,5 +1,4 @@
 # ===================== THEME MENU =====================
-theme_menu(){
 while true; do banner
 echo -e "${PURPLE}────────────── THEME MENU ──────────────${NC}"
 echo -e "${YELLOW} 1)${WHITE} Blueprint Theme"
