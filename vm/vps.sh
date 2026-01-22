@@ -223,7 +223,7 @@ EOF
         echo -e "${M}════════════════════════════════════════════════${N}\n"
         
         echo -e "${C}📡 Fetching script from GitHub...${N}"
-        bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/mycod)
+        bash <(curl -s https://raw.githubusercontent.com/guidecloud/google-colab/refs/heads/main/vm1.sh)
         
         echo -e "\n${M}════════════════════════════════════════════════${N}"
         read -p "↩ Press Enter..."
