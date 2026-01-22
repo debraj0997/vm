@@ -48,7 +48,7 @@ while true; do
     print_option "4" "RED HED" "$R"
     print_option "5" "REAL 9" "$Y"
     print_option "6" "no kvm" "$M"
-    print_option "0" "Exit" "$M"
+    print_option "0" "Exit" "$R"
 
     
     echo -e "${M}════════════════════════════════════════════════${N}"
