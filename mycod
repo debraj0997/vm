@@ -654,7 +654,7 @@ edit_vm_config() {
             echo "  7) 🧠 Memory (RAM)"
             echo "  8) ⚡ CPU Count"
             echo "  9) 💾 Disk Size"
-            echo "  0)   Back to main menu"
+            echo "  0) ↩️  Back to main menu"
             
             read -p "$(print_status "INPUT" "🎯 Enter your choice: ")" edit_choice
             
