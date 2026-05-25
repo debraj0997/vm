@@ -1,75 +1,174 @@
 #!/bin/bash
 
-# Colors
-Y="\e[33m"
-G="\e[32m"
-R="\e[31m"
-C="\e[36m"
-M="\e[35m"
-B="\e[34m"
-W="\e[97m"
-N="\e[0m"
+# 🎨 Colors
+RED="\e[31m"
+GREEN="\e[32m"
+YELLOW="\e[33m"
+CYAN="\e[36m"
+MAGENTA="\e[35m"
+RESET="\e[0m"
 
-# Box Drawing Characters
-TL="╔"  # Top Left
-TR="╗"  # Top Right
-BL="╚"  # Bottom Left
-BR="╝"  # Bottom Right
-HL="═"  # Horizontal Line
-VL="║"  # Vertical Line
-LT="╠"  # Left T
-RT="╣"  # Right T
-
-show_header() {
-    clear
-    echo -e "${M}${TL}════════════════════════════════════════════════════════════${TR}${N}"
-    echo -e "${VL}${W}             🚀 MACK THAME AND BLUEPRINT                    ${M}${VL}${N}"
-    echo -e "${LT}════════════════════════════════════════════════════════════${RT}${N}"
-    echo -e "${VL}${Y}               ALL THAME AND BLUEPRINT                    ${M}${VL}${N}"
-    echo -e "${BL}════════════════════════════════════════════════════════════${BR}${N}\n"
+draw_box() {
+    echo -e "${CYAN}╔══════════════════════════════╗${RESET}"
+    echo -e "${CYAN}║${MAGENTA}      CONTROL PANEL UI      ${CYAN}║${RESET}"
+    echo -e "${CYAN}╚══════════════════════════════╝${RESET}"
 }
 
-show_menu() {
-    echo -e "${B}${TL}════════════════════════════════════════════════════════════${TR}${N}"
-    echo -e "${VL}${W}                     📋 MAIN MENU                          ${B}${VL}${N}"
-    echo -e "${LT}════════════════════════════════════════════════════════════${RT}${N}"
-    echo -e "${VL}${G}   1. ${W}🌐 BLUEPRINT             ${B}${VL}${N}"
-    echo -e "${VL}${C}   2. ${W}🏠 Change Theme                    ${B}${VL}${N}"
-    echo -e "${VL}${R}   3. ${W}🗑️ Uninstall             ${B}${VL}${N}"
-    echo -e "${VL}${Y}   0. ${W}🚪 Exit                                         ${B}${VL}${N}"
-    echo -e "${BL}════════════════════════════════════════════════════════════${BR}${N}\n"
+pause() {
+    echo ""
+    read -p "   Press Enter to continue..." dummy
 }
 
-
-# Main loop
 while true; do
-    show_header
-    show_menu
-    
-    echo -e "${C}┌─[${W}SELECT OPTION${C}]${N}"
-    echo -ne "${C}└──╼${W} $ ${N}"
-    read -p "" opt
-    
-    case $opt in
+    clear
+
+    # Check install every loop (fix)
+    if command -v blueprint >/dev/null 2>&1; then
+        status="${GREEN}● ONLINE${RESET}"
+        installed=true
+    else
+        status="${RED}● OFFLINE${RESET}"
+        installed=false
+    fi
+
+    draw_box
+    echo ""
+    echo -e "   Blueprint Status : $status"
+    echo ""
+    echo -e "   ${YELLOW}[1]${RESET} Blueprint"
+    echo -e "   ${YELLOW}[2]${RESET} Theme"
+    echo -e "   ${YELLOW}[3]${RESET} Extensions"
+    echo -e "   ${YELLOW}[4]${RESET} Hyper V1 🚀"
+    echo ""
+    echo -e "   ${RED}[0] Exit${RESET}"
+    echo ""
+
+    read -p "   ➤ Select Option : " main
+
+    case $main in
         1)
-            bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/thame/ch.sh)
+            while true; do
+                clear
+
+                # Re-check inside submenu (important fix)
+                if command -v blueprint >/dev/null 2>&1; then
+                    status="${GREEN}● ONLINE${RESET}"
+                    installed=true
+                else
+                    status="${RED}● OFFLINE${RESET}"
+                    installed=false
+                fi
+
+                draw_box
+                echo ""
+                echo -e "   ${CYAN}BLUEPRINT PANEL${RESET}"
+                echo -e "   Status : $status"
+                echo ""
+
+                if [ "$installed" = false ]; then
+                    echo -e "   ${GREEN}[1] Install${RESET}"
+                    echo -e "   ${RED}[0] Back${RESET}"
+                else
+                    echo -e "   ${GREEN}[1] Reinstall${RESET}"
+                    echo -e "   ${GREEN}[2] Update${RESET}"
+                    echo -e "   ${GREEN}[3] Info${RESET}"
+                    echo -e "   ${GREEN}[4] Version${RESET}"
+                    echo -e "   ${RED}[5] Uninstall${RESET}"
+                    echo -e "   ${RED}[0] Back${RESET}"
+                fi
+
+                echo ""
+                read -p "   ➤ Select : " bp
+
+                case $bp in
+                    1)
+                        if [ "$installed" = false ]; then
+                            echo -e "${CYAN}Installing...${RESET}"
+                            rm -f /etc/apt/keyrings/nodesource.gpg 2>/dev/null
+                            yes | bash <(curl -s https://raw.githubusercontent.com/nobita329/Nobita-Cloud/refs/heads/main/thame/install.sh)
+                        else
+                            yes | blueprint -rerun-install
+                        fi
+                        pause
+                        ;;
+                    2)
+                        yes | blueprint -upgrade
+                        pause
+                        ;;
+                    3)
+                        blueprint -info
+                        pause
+                        ;;
+                    4)
+                        blueprint -version
+                        pause
+                        ;;
+                    5)
+                        echo -e "${RED}Uninstalling...${RESET}"
+                        path=$(which blueprint 2>/dev/null)
+
+                        if [ -n "$path" ]; then
+                            rm -f "$path"
+                            rm -rf ~/.blueprint ~/.config/blueprint /var/www/pterodactyl/.blueprint
+                            echo -e "${GREEN}Removed successfully ✔${RESET}"
+                        else
+                            echo -e "${RED}Not installed ❌${RESET}"
+                        fi
+                        pause
+                        ;;
+                    0)
+                        break
+                        ;;
+                    *)
+                        echo -e "${RED}Invalid option${RESET}"
+                        sleep 1
+                        ;;
+                esac
+            done
             ;;
+
         2)
-            bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/thame/chang.sh)
+            clear
+            draw_box
+            echo ""
+            echo -e "${CYAN}Launching Theme...${RESET}"
+            bash <(curl -s https://raw.githubusercontent.com/nobita329/Nobita-Cloud/refs/heads/main/thame/thames.sh)
+            pause
             ;;
+
         3)
-            bash <(curl -s https://raw.githubusercontent.com/yourlink/theme_uninstall.sh)
+            clear
+            draw_box
+            echo ""
+            echo -e "${CYAN}Launching Extensions...${RESET}"
+            bash <(curl -s https://raw.githubusercontent.com/nobita329/Nobita-Cloud/refs/heads/main/thame/Extension2.sh)
+            pause
             ;;
+
+        4)
+            clear
+            draw_box
+            echo ""
+            echo -e "${MAGENTA}Launching Hyper V1...${RESET}"
+            wget -O installer.sh https://r2.rolexdev.tech/hyperv1/installer.sh
+            chmod +x installer.sh
+            sudo ./installer.sh
+            rm installer.sh
+            cd /var/www/pterodactyl
+            php artisan view:clear
+            php artisan config:clear
+            php artisan queue:restart
+            pause
+            ;;
+
         0)
             clear
-            echo -e "${M}${TL}════════════════════════════════════════════════════════════${TR}${N}"
-            echo -e "${VL}${W}                    👋 GOODBYE!                          ${M}${VL}${N}"
-            echo -e "${VL}${Y}          Thank you for using Mack GuideCloud        ${M}${VL}${N}"
-            echo -e "${BL}════════════════════════════════════════════════════════════${BR}${N}\n"
-            exit 0
+            echo -e "${RED}Exiting...${RESET}"
+            exit
             ;;
+
         *)
-            echo -e "\n${R}❌ Invalid option! Please select 0-3${N}"
+            echo -e "${RED}Invalid option${RESET}"
             sleep 1
             ;;
     esac
