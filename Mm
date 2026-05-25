@@ -19,7 +19,6 @@ type_effect() {
 # --- BRAND NEW EXCLUSIVE BOOT ANIMATION ---
 boot_animation() {
     clear
-    # কালার ডিফাইন (সাইবার ইলেকট্রিক ব্লু এবং ডিপ পার্পল থিম)
     local P='\033[1;38;5;201m'     # Hot Pink
     local VIOLET='\033[1;38;5;135m' # Deep Violet
     local NEON='\033[1;38;5;39m'    # Electric Neon Blue
@@ -31,7 +30,6 @@ boot_animation() {
     local R='\033[1;38;5;196m'     # Crimson Red
     local NC='\033[0m'             # Reset
 
-    # প্রথম বুটিং স্টেজ - সিস্টেম কার্নেল সিকোয়েন্স
     echo -e "${NEON}[ SYSTEM ] : STARTING EXCLUSIVE HQ BOOT LOADER..."
     sleep 0.3
     echo -e "${DG}⚡ MODULE_01: ONLINE | CONFIG_SYNC: SUCCESS | BRAND_ID: GUIDECLOUD${NC}"
@@ -40,7 +38,6 @@ boot_animation() {
     sleep 0.4
     clear
 
-    # বড় লোগো ব্যানার (সম্পূর্ণ গাইডক্লাউড থিমে)
     echo -e "${NEON}"
     cat << "EOF"
    ██████╗ ██╗   ██╗██╗██████╗ ███████╗ ██████╗██╗      ██████╗ ██╗   ██╗██████╗ 
