@@ -1,105 +1,87 @@
+
 #!/bin/bash
 
-# ================= COLORS =================
-R="\e[31m"; G="\e[32m"; Y="\e[33m"
-B="\e[34m"; M="\e[35m"; C="\e[36m"
-W="\e[97m"; N="\e[0m"
+# ==================================================
+#  BLUEPRINT AUTO-INSTALLER | ONE-CLICK
+# ==================================================
 
-# ================= UI FUNCTIONS =================
-header() {
-  clear
-  echo -e "${M}"
-  echo "╔══════════════════════════════════════════════════════╗"
-  echo "║        🚀 PTERODACTYL BLUEPRINT INSTALLER            ║"
-  echo "╠══════════════════════════════════════════════════════╣"
-  echo "║      UI • Auto • Clean • No Bakchodi                 ║"
-  echo "╚══════════════════════════════════════════════════════╝"
-  echo -e "${N}"
-}
+# --- COLORS ---
+R="\e[31m"; G="\e[32m"; Y="\e[33m"; B="\e[34m"; C="\e[36m"; W="\e[37m"; N="\e[0m"
 
-step() {
-  echo -e "${C}➜ $1${N}"
-}
+# --- CONFIG ---
+PT_DIR="/var/www/pterodactyl"
 
-ok() {
-  echo -e "${G}✔ $1${N}"
-}
-
-fail() {
-  echo -e "${R}✘ $1${N}"
-  exit 1
-}
-
-# ================= CHECK ROOT =================
+# --- 1. CHECK ROOT ---
 if [ "$EUID" -ne 0 ]; then
-  fail "Please run as root"
+    echo -e "${R}❌ Error: Please run as root (sudo bash $0)${N}"
+    exit 1
 fi
 
-# ================= VARIABLES =================
-cd /var/www/pterodactyl
-php artisan down
-curl -L https://github.com/pterodactyl/panel/releases/download/v1.11.11/panel.tar.gz | tar -xzv
-chmod -R 755 storage/* bootstrap/cache
-COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
-php artisan view:clear
-php artisan config:clear
-php artisan migrate --seed --force
-chown -R www-data:www-data /var/www/pterodactyl/*
-php artisan queue:restart
-php artisan up
+# --- 2. PRE-FLIGHT CHECK ---
+clear
+echo -e "${B}╔══════════════════════════════════════════════════════╗${N}"
+echo -e "${B}║${W}       🚀 PTERODACTYL BLUEPRINT AUTO-INSTALLER        ${B}║${N}"
+echo -e "${B}╚══════════════════════════════════════════════════════╝${N}"
+echo
+echo -e "${Y}⚠️  This script will automatically install Blueprint on:${N}"
+echo -e "${C}   $PT_DIR${N}"
+echo
+echo -e "Starting in 3 seconds... (Press Ctrl+C to cancel)"
+sleep 3
 
-echo -e "${GREEN}🎉 Panel Updated Successfully${NC}"
-export PTERODACTYL_DIRECTORY=/var/www/pterodactyl
+# --- 3. EXECUTION ---
 
-# ================= START =================
-header
-step "Installing base dependencies (curl, wget, unzip)"
-apt update -y && apt install -y curl wget unzip ca-certificates git gnupg zip || fail "Deps install failed"
-ok "Base dependencies installed"
+# Step 1: Check Directory
+echo -e "\n${B}[1/6] Checking Pterodactyl Directory...${N}"
+if [ ! -d "$PT_DIR" ]; then
+    echo -e "${R}❌ Error: Pterodactyl not found at $PT_DIR${N}"
+    exit 1
+fi
+echo -e "${G}✔ Found directory.${N}"
 
-step "Switching to Pterodactyl directory"
-cd "$PTERODACTYL_DIRECTORY" || fail "Pterodactyl directory not found"
+# Step 2: Install Dependencies
+echo -e "\n${B}[2/6] Installing System Dependencies...${N}"
+apt update -y -q
+apt install -y curl wget unzip ca-certificates git gnupg zip -q
+echo -e "${G}✔ Dependencies installed.${N}"
 
-step "Downloading Blueprint Framework (latest)"
-wget "$(curl -s https://api.github.com/repos/BlueprintFramework/framework/releases/latest | grep 'browser_download_url' | grep 'release.zip' | cut -d '"' -f 4)" -O "$PTERODACTYL_DIRECTORY/release.zip"
-unzip -o release.zip || fail "Unzip failed"
-ok "Blueprint downloaded & extracted"
-
-# ================= NODE.JS =================
-step "Installing Node.js 20.x"
+# Step 3: Install Node.js & Yarn
+echo -e "\n${B}[3/6] Configuring Node.js environment...${N}"
 mkdir -p /etc/apt/keyrings
 curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" \
-> /etc/apt/sources.list.d/nodesource.list
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" > /etc/apt/sources.list.d/nodesource.list
+apt update -y -q
+apt install -y nodejs -q
+npm i -g yarn
+echo -e "${G}✔ Node.js & Yarn ready.${N}"
 
-apt update -y && apt install -y nodejs || fail "Node.js install failed"
-ok "Node.js installed"
+# Step 4: Download Blueprint
+echo -e "\n${B}[4/6] Downloading Blueprint Framework...${N}"
+cd "$PT_DIR"
+DOWNLOAD_URL=$(curl -s https://api.github.com/repos/BlueprintFramework/framework/releases/latest | grep 'browser_download_url' | grep 'release.zip' | cut -d '"' -f 4)
+wget -q "$DOWNLOAD_URL" -O "$PT_DIR/release.zip"
+unzip -o -q release.zip
+echo -e "${G}✔ Files extracted.${N}"
 
-# ================= YARN & DEPENDENCIES =================
-step "Installing Yarn & Node dependencies"
-npm i -g yarn || fail "Yarn install failed"
-yarn install || fail "Yarn dependencies failed"
-ok "Node dependencies ready"
-
-# ================= BLUEPRINT CONFIG =================
-step "Creating .blueprintrc configuration"
-cat <<EOF > "$PTERODACTYL_DIRECTORY/.blueprintrc"
+# Step 5: Configuration
+echo -e "\n${B}[5/6] Generating Configuration...${N}"
+cat <<EOF > "$PT_DIR/.blueprintrc"
 WEBUSER="www-data";
 OWNERSHIP="www-data:www-data";
 USERSHELL="/bin/bash";
 EOF
-ok ".blueprintrc created"
+chmod +x "$PT_DIR/blueprint.sh"
+chown -R www-data:www-data "$PT_DIR"
+echo -e "${G}✔ Config generated.${N}"
 
-# ================= PERMISSIONS =================
-step "Setting permissions"
-chmod +x "$PTERODACTYL_DIRECTORY/blueprint.sh" || fail "Permission failed"
-chown -R www-data:www-data "$PTERODACTYL_DIRECTORY"
-ok "Permissions fixed"
+# Step 6: Install
+echo -e "\n${B}[6/6] Running Blueprint Internal Installer...${N}"
+# Auto-confirm flags often needed for automated scripts, 
+# typically blueprint.sh requires interaction, we run it directly.
+yes | bash "$PT_DIR/blueprint.sh"
 
-# ================= RUN BLUEPRINT =================
-step "Launching Blueprint installer"
-bash "$PTERODACTYL_DIRECTORY/blueprint.sh"
-
-# ================= DONE =================
-echo -e "\n${G}🎉 Blueprint UI Installation Complete!${N}"
-echo -e "${Y}Panel breathe kar raha hai… theme lagao, flex maro 😏${N}"
+# --- FINISH ---
+echo -e "\n${G}══════════════════════════════════════════════════════${N}"
+echo -e "${G}   🎉 INSTALLATION COMPLETE!${N}"
+echo -e "${W}   Blueprint Framework is now active on your panel.${N}"
+echo -e "${G}══════════════════════════════════════════════════════${N}"
