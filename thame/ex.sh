@@ -1,22 +1,20 @@
 #!/bin/bash
 
 # ==========================================================
-# 🚀 GUIDECLOUD BLUEPRINT EXTENSION MATRIX v4.0
+# 🚀 GUIDECLOUD BLUEPRINT MANAGER v4.0
 # 🛠️ POWERED BY: B1 @ HQ
 # 📅 ARCHITECTURE EDITION: 2026
 # ==========================================================
 [[ $EUID -ne 0 ]] && echo "Run as root!" && exit 1
 
 # ==========================================
-# 🎨 PREMIUM CYBER NEON THEME
+# 🎨 COLORS
 # ==========================================
 R="\e[31m"; G="\e[32m"; Y="\e[33m"
 B="\e[34m"; M="\e[35m"; C="\e[36m"
 W="\e[97m"; N="\e[0m"
-
 BR="\e[1;31m"; BG="\e[1;32m"; BY="\e[1;33m"
 BM="\e[1;35m"; BC="\e[1;36m"; BW="\e[1;97m"
-VIOLET="\e[1;38;5;135m"
 
 URL="https://github.com/debraj0997/vm/tree/main/thame/all/ex"
 selected_indices=()
@@ -65,39 +63,46 @@ run_blueprint() {
     local ACTION="$2"
     cd /var/www/pterodactyl || exit 1
     if [[ "$ACTION" == "install" ]]; then
-        echo -e "${G}📥 Injecting Extension: ${NAME%.blueprint}...${N}"
+        echo -e "${G}📥 Installing ${NAME%.blueprint}...${N}"
         wget -q "$URL/$NAME" -O "$NAME"
         [[ -s "$NAME" ]] && yes | blueprint -i "$NAME" && rm -f "$NAME"
     else
-        echo -e "${R}🗑️ Wiping Extension: ${NAME%.blueprint}...${N}"
+        echo -e "${R}🗑️ Removing ${NAME%.blueprint}...${N}"
         yes | blueprint -r "${NAME%.blueprint}"
     fi
 }
 
 # ==========================================
-# 📋 BRANDED HEADER & MENU
+# 📋 HEADER (GUIDECLOUD STYLED)
 # ==========================================
-show_menu() {
+header() {
     clear
     echo -e "${BC} ╔══════════════════════════════════════════════════════════╗${N}"
-    printf " ${BC}║${BW}%-58s${BC}║${N}\n" "            💠 GUIDECLOUD EXTENSION CENTER 💠"
-    printf " ${BC}║${VIOLET}%-58s${BC}║${N}\n" "         Advanced Multi-Select Blueprint Deployer"
+    printf " ${BC}║${BW}%-58s${BC}║${N}\n" "            💠 GUIDECLOUD EXTENSION CONTROL 💠"
+    printf " ${BC}║${B}%-58s${BC}║${N}\n" "           Multi-Extension & Blueprint Injector"
     echo -e "${BC} ╚══════════════════════════════════════════════════════════╝${N}"
-    echo -e " ${B}Operator:${N} B1 @ HQ    ${B}Portal:${N} www.guidecloud.in    ${B}Time:${N} $(date +'%H:%M')"
+    echo -e " ${B}Operator:${N} B1 @ HQ    ${B}Host:${N} $(hostname)    ${B}Time:${N} $(date +'%H:%M')"
     echo -e "${C} ──────────────────────────────────────────────────────────${N}"
+}
+
+# ==========================================
+# 📋 MENU
+# ==========================================
+show_menu() {
+    header
+    echo -e "${BW} SELECT PLUGINS / BLUEPRINTS ID:${N}\n"
     
     local count=0
     for i in "${!names[@]}"; do
         num=$((i+1))
         clean_name="${names[$i]%.blueprint}"
         
-        # Status Icon (Active vs Inactive)
+        # Status Icon
         is_installed "$clean_name" && status="${BG}●${N}" || status="${R}○${N}"
-        
-        # Selection Mark Check
+        # Selection Icon
         is_selected "$i" && select_mark="${BY}[+]${N}" || select_mark="   "
 
-        # Truncate safe layout block
+        # Truncate long names to 22 chars to protect the 2-column layout
         display_name="${clean_name:0:22}"
 
         printf " %b ${BG}%2d${N} %-22s %b  " "$select_mark" "$num" "$display_name" "$status"
@@ -105,11 +110,12 @@ show_menu() {
         [[ $((count % 2)) -eq 0 ]] && echo ""
     done
 
+    # Add a newline if list ends on an odd number
     [[ $((count % 2)) -ne 0 ]] && echo ""
 
     echo -e "${C} ──────────────────────────────────────────────────────────${N}"
-    echo -e " ${BW}QUEUE POOL:${N} ${BY}${#selected_indices[@]}${N} Units Selected"
-    echo -e " ${BG}[i]${N} Install Batch  ${BR}[r]${N} Remove Batch  ${BM}[a]${N} Select All  ${BC}[c]${N} Reset Selection  ${R}[0]${N} Exit Core"
+    echo -e " ${BW}SELECTED QUEUE:${N} ${BY}${#selected_indices[@]}${N} items"
+    echo -e " ${BG}[i]${N} Install   ${BR}[r]${N} Remove   ${BM}[a]${N} Select All   ${BC}[c]${N} Clear   ${R}[0]${N} Exit Engine"
     echo -e "${C} ──────────────────────────────────────────────────────────${N}"
 }
 
@@ -118,10 +124,10 @@ show_menu() {
 # ==========================================
 while true; do
     show_menu
-    read -p " 🪐 ENTER UNITS ID(s) OR EXEC ACTION → " choice
+    read -p " 🪐 SELECT ID(S) OR ACTION NODE → " choice
 
     case $choice in
-        0) echo -e "\n${G} [✔] GuideCloud Extension Session Terminated. Goodbye B1!${N}\n"; exit 0 ;;
+        0) echo -e "\n${G} [✔] GuideCloud Core Session Closed. Goodbye Operator B1!${N}\n"; exit 0 ;;
         c|C) selected_indices=() ;;
         a|A) 
             selected_indices=()
@@ -131,7 +137,7 @@ while true; do
             ;;
         i|I|r|R)
             if [[ ${#selected_indices[@]} -eq 0 ]]; then
-                echo -e "${R} [!] Operation Terminated: Deployment queue is empty!${N}"; sleep 1; continue
+                echo -e "${R}Nothing selected in queue!${N}"; sleep 1; continue
             fi
             action_type="install"
             [[ "$choice" =~ [rR] ]] && action_type="remove"
@@ -141,14 +147,15 @@ while true; do
             done
             selected_indices=()
             echo ""
-            read -p " ↩️ Processing complete. Press [Enter] to return to Matrixboard..."
+            read -p "Process Complete. Press Enter to return back..."
             ;;
         *)
-            # Multi-select toggle logic
+            # Multi-select toggle logic (supports space-separated numbers like "1 4 12")
             for val in $choice; do
                 if [[ "$val" =~ ^[0-9]+$ ]] && (( val >= 1 && val <= ${#names[@]} )); then
                     idx=$((val-1))
                     if is_selected "$idx"; then
+                        # Remove from array
                         for i in "${!selected_indices[@]}"; do
                             if [[ ${selected_indices[i]} -eq $idx ]]; then
                                 unset 'selected_indices[i]'
@@ -159,7 +166,7 @@ while true; do
                         selected_indices+=("$idx")
                     fi
                 else
-                    echo -e "${R} [!] Invalid Option Segment: $val${N}"; sleep 0.5
+                    echo -e "${R}Invalid Option Node: $val${N}"; sleep 0.5
                 fi
             done
             ;;
