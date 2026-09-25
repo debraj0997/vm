@@ -134,11 +134,11 @@ echo -e "   ${C1}04)${C2} 🧬 Jexpanel v4        ${C1}10)${C2} 🔧 External To
 echo -e "   ${C1}05)${C2} 📊 Dashboard v3       ${C1}11)${C2} 🔙 Return to HQ"
 echo -e "   ${C1}06)${C2} 📈 Dashboard v4"
 echo -e " ${C1}─────────────────────────────────────────────────────────────────────────────${NC}"
-read -p " 🎯 ENTER CHOICE → " p
+read -p " 🎯 ENTER CHOICE → " 
 
 case $p in
  1|01) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unFEATHERPANEL.sh) ;;
- 2|02) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unPterodactyl.sh) ;;
+ 2|02) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/panel/ptpanelall/pt.sh) ;;
  3|03) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/panel/Jexactyl.sh) ;;
  4|04) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/unJexactyl.sh) ;;
  5|05) bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/Uninstall/undash-3.sh) ;;
