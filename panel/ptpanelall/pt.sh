@@ -52,7 +52,6 @@ install_ptero() {
     status_msg "INFO" "Initiating installation script..."
     sleep 1
     
-    # Run external script
     bash <(curl -s https://raw.githubusercontent.com/debraj0997/vm/refs/heads/main/panel/ptpanelall/install.sh)
     
     echo ""
@@ -158,6 +157,67 @@ uninstall_ptero() {
     pause
 }
 
+# ================= HELPER FUNCTIONS FOR UPDATE =================
+fetch_github_versions() {
+    local repo=$1
+    echo -e "  ${GRAY}Fetching releases from ${WHITE}$repo${GRAY}...${NC}" >&2
+    local json
+    json=$(curl -sf "https://api.github.com/repos/$repo/releases?per_page=20" 2>/dev/null) || {
+        echo -e "  ${RED}Failed to fetch releases.${NC}" >&2
+        return 1
+    }
+    echo "$json" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+for r in data:
+    if r.get('prerelease', False):
+        continue
+    tag = r.get('tag_name', '')
+    if tag.startswith('v'):
+        print(tag)
+" 2>/dev/null || return 1
+}
+
+select_version() {
+    local repo=$1
+    local var_name=$2
+    local default="latest"
+    echo -e "\n  ${PURPLE}::${NC} ${WHITE}Available Panel Versions${NC}"
+    local tags=() disp=() i=0
+    while IFS= read -r tag; do
+        [[ -z "$tag" ]] && continue
+        tags+=("$tag")
+        i=$((i+1))
+        disp+=("  ${GRAY}$i.${NC}${WHITE}$tag${NC}")
+    done < <(fetch_github_versions "$repo" 2>/dev/null) || true
+
+    if [[ ${#tags[@]} -eq 0 ]]; then
+        echo -e "  ${YELLOW}No versions found. Using latest.${NC}"
+        eval "$var_name=\"$default\""
+        return
+    fi
+
+    printf '%b\n' "${disp[@]}"
+    local max=${#tags[@]}
+    echo -ne "\n  ${PURPLE}•${NC}${WHITE}Select version [1-$max]${NC} ${GRAY}[1 = latest]${NC}\n  ${GRAY}╰─>${NC} "
+    if ! read -t 10 choice; then
+        echo -e "\n  ${GOLD}⌛ Timeout — using latest: ${WHITE}${tags[0]}${NC}"
+        eval "$var_name=\"${tags[0]}\""
+        return
+    fi
+    if [[ -z "$choice" \vert{}\vert{} "$choice" == "1" ]]; then
+        echo -e "  ${GREEN}→${WHITE}${tags[0]}${NC}"
+        eval "$var_name=\"${tags[0]}\""
+    elif [[ "$choice" =~ ^[0-9]+$]] && [[$choice -ge 1 ]] && [[ $choice -le$max ]]; then
+        local idx=$((choice - 1))
+        echo -e "  ${GREEN}→ ${WHITE}${tags[$idx]}${NC}"
+        eval "$var_name=\"${tags[$idx]}\""
+    else
+        echo -e "  ${GREEN}→${WHITE}${tags[0]}${NC} (invalid input)"
+        eval "$var_name=\"${tags[0]}\""
+    fi
+}
+
 # ================= UPDATE FUNCTION =================
 update_panel() {
     show_header "SYSTEM UPDATE"
@@ -169,71 +229,10 @@ update_panel() {
     fi
 
     status_msg "INFO" "Putting panel into Maintenance Mode..."
-
     GITHUB_REPO="pterodactyl/panel"
 
     step() {
         echo -e "  [${CYAN} ➜${NC}] $1"
-    }
-
-    fetch_github_versions() {
-        local repo=$1
-        echo -e "  ${GRAY}Fetching releases from ${WHITE}$repo${GRAY}...${NC}" >&2
-        local json
-        json=$(curl -sf "https://api.github.com/repos/$repo/releases?per_page=20" 2>/dev/null) || {
-            echo -e "  ${RED}Failed to fetch releases.${NC}" >&2
-            return 1
-        }
-        echo "$json" | python3 -c "
-import sys, json
-data = json.load(sys.stdin)
-for r in data:
-    if r.get('prerelease', False):
-        continue
-    tag = r.get('tag_name', '')
-    if tag.startswith('v'):
-        print(tag)
-" 2>/dev/null || return 1
-    }
-
-    select_version() {
-        local repo=$1
-        local var_name=$2
-        local default="latest"
-        echo -e "\n  ${PURPLE}::${NC} ${WHITE}Available Panel Versions${NC}"
-        local tags=() disp=() i=0
-        while IFS= read -r tag; do
-            [[ -z "$tag" ]] && continue
-            tags+=("$tag")
-            i=$((i+1))
-            disp+=("  ${GRAY}$i.${NC}${WHITE}$tag${NC}")
-        done < <(fetch_github_versions "$repo" 2>/dev/null) || true
-
-        if [[ ${#tags[@]} -eq 0 ]]; then
-            echo -e "  ${YELLOW}No versions found. Using latest.${NC}"
-            eval "$var_name=\"$default\""
-            return
-        fi
-
-        printf '%b\n' "${disp[@]}"
-        local max=${#tags[@]}
-        echo -ne "\n  ${PURPLE}•${NC}${WHITE}Select version [1-$max]${NC} ${GRAY}[1 = latest]${NC}\n  ${GRAY}╰─>${NC} "
-        if ! read -t 10 choice; then
-            echo -e "\n  ${GOLD}⌛ Timeout — using latest: ${WHITE}${tags[0]}${NC}"
-            eval "$var_name=\"${tags[0]}\""
-            return
-        fi
-        if [[ -z "$choice" \vert{}\vert{} "$choice" == "1" ]]; then
-            echo -e "  ${GREEN}→${WHITE}${tags[0]}${NC}"
-            eval "$var_name=\"${tags[0]}\""
-        elif [[ "$choice" =~ ^[0-9]+$]] && [[$choice -ge 1 ]] && [[ $choice -le$max ]]; then
-            local idx=$((choice - 1))
-            echo -e "  ${GREEN}→ ${WHITE}${tags[$idx]}${NC}"
-            eval "$var_name=\"${tags[$idx]}\""
-        else
-            echo -e "  ${GREEN}→${WHITE}${tags[0]}${NC} (invalid input)"
-            eval "$var_name=\"${tags[0]}\""
-        fi
     }
 
     select_version "$GITHUB_REPO" "version_PANEL"
